@@ -1,15 +1,15 @@
 import 'destyle.css';
 import '~/styles/app.scss';
-import { SampleContextProvider } from '~/context/SampleContext';
+import { OverlayContextProvider } from '~/context/OverlayContext';
 import { LayoutDefault } from '~/components/LayoutDefault';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <SampleContextProvider>
+    <OverlayContextProvider>
       <LayoutDefault>
         <Component {...pageProps} />
       </LayoutDefault>
-    </SampleContextProvider>
+    </OverlayContextProvider>
   );
 }
 
