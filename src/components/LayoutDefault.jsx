@@ -55,6 +55,7 @@ export const LayoutDefault = ({ children }) => {
           // mountOnEnter={true}
           // unmountOnExit={true}
         >
+          {/* nodeRefに渡すrefは差し替え対象のdomにするっぽい */}
           <main ref={nodeRef} className={styles.root}>
             {children}
           </main>
