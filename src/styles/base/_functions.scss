@@ -22,6 +22,15 @@
   @return math.div($size, map-get($design-size, sp-height)) * 100vh;
 }
 
+// 一定サイズ以上は固定、あとは可変、みたいなレイアウト再現
+@function liquid_size($size) {
+  @if $size < 0 {
+    @return max(#{vw($size)}, #{$size}px);
+  } @else {
+    @return min(#{vw($size)}, #{$size}px);
+  }
+}
+
 // mvをいい感じにする
 @function mv_pc($size) {
   @if $size < 0 {
