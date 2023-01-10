@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from '~/styles/components/PageIndex.module.scss';
 import { SampleComponent } from '~/components/SampleComponent';
 
@@ -12,9 +11,14 @@ export const PageIndex = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>TOPページ</h1>
-      <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-      <SampleComponent text="サンプル" />
+      <h1 className={styles.title}>Next.js Template</h1>
+      <ul className={styles.list}>
+        {[...Array(9)].map((_, i) => (
+          <li className={styles.item} key={i}>
+            <SampleComponent text="サンプル" />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
