@@ -1,7 +1,7 @@
 import styles from '~/styles/components/LayoutDefault.module.scss';
 import { GlobalHeader } from '~/components/GlobalHeader';
 import { Overlay } from '~/components/Overlay';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { gsap } from 'gsap';
 import { SwitchTransition, Transition } from 'react-transition-group';
@@ -9,7 +9,7 @@ import { useOverlayContext } from '~/context/OverlayContext';
 
 export const LayoutDefault = ({ children }) => {
   const nodeRef = useRef(null);
-  const duration = 0.5;
+  const duration = 1;
   const { overlayRef } = useOverlayContext();
 
   // ページ遷移
@@ -39,6 +39,23 @@ export const LayoutDefault = ({ children }) => {
     });
   };
 
+  // exitの瞬間にscroll位置がtopにジャンプするのでそれをハック
+  useEffect(() => {
+    const scrollFix = (url) => {
+      if (url === router.asPath) return;
+
+      console.log('change start');
+      nodeRef.current.style.top = -1 * window.scrollY + 'px';
+      nodeRef.current.style.position = 'fixed';
+    };
+
+    router.events.on('routeChangeStart', scrollFix);
+
+    return () => {
+      router.events.off('routeChangeStart', scrollFix);
+    };
+  }, [router]);
+
   return (
     <>
       <GlobalHeader />
@@ -48,8 +65,26 @@ export const LayoutDefault = ({ children }) => {
         <Transition
           nodeRef={nodeRef}
           key={router.asPath}
-          onExit={onExit}
-          onEnter={onEnter}
+          onExit={() => {
+            console.log('exit', window.scrollY);
+            onExit();
+          }}
+          onExiting={() => {
+            console.log('exiting', window.scrollY);
+          }}
+          onExited={() => {
+            console.log('exited', window.scrollY);
+          }}
+          onEnter={() => {
+            console.log('enter');
+            onEnter();
+          }}
+          onEntering={() => {
+            console.log('entering');
+          }}
+          onEntered={() => {
+            console.log('entered');
+          }}
           timeout={duration * 1000} // 遷移を待機する。gsapアニメーションの長さに合わせるのが良さそう
           // in={true}
           // mountOnEnter={true}
