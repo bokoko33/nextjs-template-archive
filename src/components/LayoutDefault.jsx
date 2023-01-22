@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { gsap } from 'gsap';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useOverlayContext } from '~/context/OverlayContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const LayoutDefault = ({ children }) => {
   const nodeRef = useRef(null);
@@ -40,62 +41,34 @@ export const LayoutDefault = ({ children }) => {
   };
 
   // exitの瞬間にscroll位置がtopにジャンプするのでそれをハック
-  useEffect(() => {
-    const scrollFix = (url) => {
-      if (url === router.asPath) return;
+  // useEffect(() => {
+  //   const scrollFix = (url) => {
+  //     if (url === router.asPath) return;
 
-      console.log('change start');
-      nodeRef.current.style.top = -1 * window.scrollY + 'px';
-      nodeRef.current.style.position = 'fixed';
-    };
+  //     console.log('change start');
+  //     nodeRef.current.style.top = -1 * window.scrollY + 'px';
+  //     nodeRef.current.style.position = 'fixed';
+  //   };
 
-    router.events.on('routeChangeStart', scrollFix);
+  //   router.events.on('routeChangeStart', scrollFix);
 
-    return () => {
-      router.events.off('routeChangeStart', scrollFix);
-    };
-  }, [router]);
+  //   return () => {
+  //     router.events.off('routeChangeStart', scrollFix);
+  //   };
+  // }, [router]);
 
   return (
     <>
       <GlobalHeader />
 
       <Overlay />
-      <SwitchTransition>
-        <Transition
-          nodeRef={nodeRef}
-          key={router.asPath}
-          onExit={() => {
-            console.log('exit', window.scrollY);
-            onExit();
-          }}
-          onExiting={() => {
-            console.log('exiting', window.scrollY);
-          }}
-          onExited={() => {
-            console.log('exited', window.scrollY);
-          }}
-          onEnter={() => {
-            console.log('enter');
-            onEnter();
-          }}
-          onEntering={() => {
-            console.log('entering');
-          }}
-          onEntered={() => {
-            console.log('entered');
-          }}
-          timeout={duration * 1000} // 遷移を待機する。gsapアニメーションの長さに合わせるのが良さそう
-          // in={true}
-          // mountOnEnter={true}
-          // unmountOnExit={true}
-        >
-          {/* nodeRefに渡すrefは差し替え対象のdomにするっぽい */}
-          <main ref={nodeRef} className={styles.root}>
-            {children}
-          </main>
-        </Transition>
-      </SwitchTransition>
+
+      {/* nodeRefに渡すrefは差し替え対象のdomにするっぽい */}
+      <main ref={nodeRef} className={styles.root}>
+        <AnimatePresence mode="wait" initial={false}>
+          {children}
+        </AnimatePresence>
+      </main>
     </>
   );
 };
