@@ -4,9 +4,9 @@ module.exports = {
   reactStrictMode: true,
   optimizeFonts: false,
   trailingSlash: true,
-  experimental: {
-    scrollRestoration: true,
-  },
+  // experimental: {
+  //   scrollRestoration: true,
+  // },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },

@@ -1,10 +1,18 @@
 import 'destyle.css';
 import '~/styles/app.scss';
+// import { useEffect } from 'react';
 import { OverlayContextProvider } from '~/context/OverlayContext';
 import { LayoutDefault } from '~/components/LayoutDefault';
-import { AnimatePresence } from 'framer-motion';
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps }) {
+  // useEffect(() => {
+  //   router.beforePopState((state) => {
+  //     history.scrollRestoration = 'manual'; // お祈りで入れてます
+  //     state.options.scroll = false;
+  //     return true;
+  //   });
+  // }, [router]);
+
   return (
     <OverlayContextProvider>
       <LayoutDefault>
