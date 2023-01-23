@@ -7,6 +7,7 @@ import { gsap } from 'gsap';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useOverlayContext } from '~/context/OverlayContext';
 import { fixTimeoutTransition } from '~/hooks/TransitionTimeoutFix';
+import { beforeScrollY, setBeforeScrollY } from '~/lib/history';
 
 const duration = 0.6;
 fixTimeoutTransition(duration * 1000);
@@ -42,21 +43,15 @@ export const LayoutDefault = ({ children }) => {
     });
   };
 
-  // exitの瞬間にscroll位置がtopにジャンプするのでそれをハック
+  const scrollAfterTransition = useRef(0);
   useEffect(() => {
-    const scrollFix = (url) => {
-      if (url === router.asPath) return;
+    router.beforePopState((state) => {
+      scrollAfterTransition.current = beforeScrollY;
 
-      console.log('change start');
-      nodeRef.current.style.top = -1 * window.scrollY + 'px';
-      nodeRef.current.style.position = 'fixed';
-    };
-
-    router.events.on('routeChangeStart', scrollFix);
-
-    return () => {
-      router.events.off('routeChangeStart', scrollFix);
-    };
+      history.scrollRestoration = 'manual';
+      state.options.scroll = false;
+      return true;
+    });
   }, [router]);
 
   return (
@@ -69,24 +64,20 @@ export const LayoutDefault = ({ children }) => {
           nodeRef={nodeRef}
           key={router.asPath}
           onExit={() => {
-            console.log('exit', window.scrollY);
+            setBeforeScrollY(window.scrollY);
             onExit();
           }}
-          onExiting={() => {
-            console.log('exiting', window.scrollY);
-          }}
           onExited={() => {
-            console.log('exited', window.scrollY);
+            console.log('exited');
+            window.scrollTo(0, scrollAfterTransition.current);
           }}
           onEnter={() => {
             console.log('enter');
             onEnter();
           }}
-          onEntering={() => {
-            console.log('entering');
-          }}
           onEntered={() => {
             console.log('entered');
+            scrollAfterTransition.current = 0;
           }}
           timeout={duration * 1000} // 遷移を待機する。gsapアニメーションの長さに合わせるのが良さそう
         >
