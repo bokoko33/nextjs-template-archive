@@ -7,7 +7,7 @@ import { gsap } from 'gsap';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useOverlayContext } from '~/context/OverlayContext';
 import { fixTimeoutTransition } from '~/lib/fixTimeoutTransition';
-import { beforeScrollY, setBeforeScrollY } from '~/lib/history';
+import { beforeScrollY, setBeforeScrollY } from '~/lib/scrollHistory';
 
 const duration = 0.6;
 fixTimeoutTransition(duration * 1000);
