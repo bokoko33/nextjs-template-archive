@@ -12,15 +12,15 @@
     "destyle.css": "^3.0.2",
     "framer-motion": "^8.5.0",
     "gsap": "^3.11.4",
-    "next": "12.2.5",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^13.2.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
-    "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5",
-    "eslint-config-prettier": "^8.5.0",
-    "sass": "^1.54.5"
+    "eslint": "^8.22.0",
+    "eslint-config-next": "^13.2.4",
+    "eslint-config-prettier": "^8.8.0",
+    "sass": "^1.60.0"
   }
 }

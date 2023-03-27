@@ -12,13 +12,13 @@ export const GlobalHeader = () => {
     <header className={styles.root}>
       <div className={styles.inner}>
         <LogoTag>
-          <Link href={URL_INDEX} scroll={false}>
-            <a className={styles.logoLink}>・NextTemplate</a>
+          <Link href={URL_INDEX} className={styles.logoLink} scroll={false}>
+            ・NextTemplate
           </Link>
         </LogoTag>
 
-        <Link href={URL_ABOUT} scroll={false}>
-          <a className={styles.link}>About</a>
+        <Link href={URL_ABOUT} className={styles.link} scroll={false}>
+          About
         </Link>
       </div>
     </header>
