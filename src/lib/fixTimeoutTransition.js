@@ -1,4 +1,4 @@
-// css modulesを使用した際、ページ遷移演出の際にスタイルが削除される現象への対処
+// react-transition-groupとcss modulesを使用した際、ページ遷移演出の際にスタイルが削除される現象への対処
 // https://github.com/vercel/next.js/issues/17464#issuecomment-751267740
 import Router from 'next/router';
 

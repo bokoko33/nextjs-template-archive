@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { gsap } from 'gsap';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useOverlayContext } from '~/context/OverlayContext';
-import { fixTimeoutTransition } from '~/hooks/TransitionTimeoutFix';
+import { fixTimeoutTransition } from '~/lib/fixTimeoutTransition';
 import { beforeScrollY, setBeforeScrollY } from '~/lib/history';
 
 const duration = 0.6;
